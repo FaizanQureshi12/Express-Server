@@ -1,4 +1,4 @@
-// console.log('hello world as module javascript')
+console.log('hello world as module javascript')
 
 import express   from "express"
 import path from 'path'
