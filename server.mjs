@@ -1,10 +1,12 @@
 import express   from "express"
 import path from 'path'
+import cors from 'cors'
 
 const app = express()
 const port = process.env.Port || 5001
 console.log('hello world as module javascript')
- 
+   
+app.use(cors());
 app.get('/abc', (req, res) => {
     console.log('request ip:',req.ip)
   res.send('Hello Faizan Qureshi!' + new Date().toString())
@@ -15,6 +17,8 @@ app.get('/weather', (req, res) => {
 res.send(
   { 
     temp:20,
+    min:10,
+    max:50,
     humidity:63,
     serverTime: new Date().toString()
   });
