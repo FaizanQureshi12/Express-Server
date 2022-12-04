@@ -3,6 +3,11 @@ import './App.css';
 import { useState } from "react"
 import axios from "axios";
 
+let baseUrl = ``
+if (window.location.href.split(':')[0] === 'http') {
+    baseUrl = `http://localhost:5001`
+}
+
 function App() {
 
     const [weatherData, setWeatherData] = useState(null)
@@ -10,12 +15,10 @@ function App() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
         console.log("I am click handler")
-        axios.get(`http://localhost:5001/weather`)
+        axios.get(`${baseUrl}/weather/${cityName}`)
             .then(response => {
                 console.log("response: ", response.data);
-
                 setWeatherData(response.data);
             })
             .catch(err => {
@@ -24,21 +27,20 @@ function App() {
     }
 
     return (
-        <div>
-
-            <form onSubmit={submitHandler}>
+        <div >
+            <form onSubmit={submitHandler} id='get'>
                 City Name:
-                <input type="text" placeholder="enter your city name" required
-                    onChange={(e) => { setCityName(e.target.value) }} />
-
-                <button type="submit">get weather</button>
+                <input type="text" id='put' placeholder="Enter your city name" 
+                required onChange={(e) => { setCityName(e.target.value) }} /> 
+                <button type="submit" id='bttn'>Get weather</button>
             </form>
             <br />
             <br />
 
             {(weatherData === null) ? null :
-                <div>
-
+                <div id='result'>
+                    City: {weatherData?.city}
+                    <br />
                     Temperature: {Math.round(weatherData?.temp)}°C
                     <br />
                     min: {Math.round(weatherData?.min)}°C
